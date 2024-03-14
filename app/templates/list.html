@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}List{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1>Tasks</h1>
+  <div class="list-group mb-3">
+    {% for task in tasks %}
+      <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        {{ task["name"] }}
+        <small>{{ task["summary"] }}</small>
+        <span>
+          <a href="{{ url_for('delete_task', pk=task['id']) }}" class="btn btn-danger btn-sm" onclick="return confirm('you want to delete this task?');">Delete</a>
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Create new task</h5>
+      <form action="{{ url_for('create_task') }}" method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Task name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Task name" required>
+        </div>
+        <div class="mb-3">
+          <label for="summary" class="form-label">Task summary</label>
+          <input type="text" class="form-control" id="summary" name="summary" placeholder="Task summary" required>
+        </div>
+        <button type="submit" class="btn btn-primary">create task</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
